@@ -314,6 +314,30 @@ function initVideoModal() {
   });
 }
 
+function initVideoHints() {
+  const previewVideos = document.querySelectorAll("video[data-modal-src]");
+
+  previewVideos.forEach((video) => {
+    const host = video.parentElement;
+    if (!host || host.querySelector(":scope > .video-view-hint")) return;
+
+    host.classList.add("video-hint-host");
+
+    const hint = document.createElement("div");
+    hint.className = "video-view-hint";
+    hint.setAttribute("aria-hidden", "true");
+
+    const icon = document.createElement("i");
+    icon.textContent = "▶";
+
+    const label = document.createElement("b");
+    label.textContent = "点击观看完整视频";
+
+    hint.append(icon, label);
+    host.appendChild(hint);
+  });
+}
+
 function initLazyVideoPreviews() {
   const previewVideos = Array.from(document.querySelectorAll("video")).filter(
     (video) => !video.closest("#videoModal")
@@ -497,6 +521,7 @@ function initVideoProtection() {
 
 renderPublicWorks();
 initAdmin();
+initVideoHints();
 initLazyVideoPreviews();
 initVideoModal();
 initImageModal();
